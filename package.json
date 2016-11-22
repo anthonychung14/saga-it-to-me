@@ -5,15 +5,16 @@
   "main": "lib/index.js",
   "scripts": {
     "test": "babel-node sagas.spec.js | tap-spec",
-    "start": "budo main.js:build.js --dir ./ --verbose  --live -- -t babelify"
+    "start": "cross-env BABEL_ENV=cjs node server.js"
   },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/yelouafi/redux-saga-beginner-tutorial.git"
   },
-  "author": "Yassine ELOUAFI <yelouafi@gmail.com>",
+  "author": "Yeloaufi/ac14 ",
   "license": "MIT",
   "dependencies": {
+    "babel-eslint": "^7.1.1",
     "babel-polyfill": "6.3.14",
     "react": "^0.14.3",
     "react-dom": "^0.14.3",
@@ -27,9 +28,23 @@
     "babel-preset-react": "^6.1.18",
     "babel-preset-stage-2": "^6.1.18",
     "babelify": "^7.2.0",
-    "browserify": "^13.0.0",
-    "budo": "^8.0.4",
+    "babel-loader": "^6.2.5",
+    "babel-polyfill": "^6.7.4",
+    "cross-env": "^1.0.8",
+    "eslint": "^2.8.0",
+    "express": "^4.13.3",
+    "gitbook-cli": "1.0.1",
+    "isomorphic-fetch": "^2.2.0",
+    "react": "^15.0.0",
+    "react-dom": "^15.0.0",
+    "react-redux": "^4.4.5",
+    "redux": "^3.5.1",
+    "redux-logger": "^2.6.1",
+    "rimraf": "^2.4.3",
     "tap-spec": "^4.1.1",
-    "tape": "^4.2.2"
+    "tape": "^4.2.2",
+    "webpack": "1.13.0",
+    "webpack-dev-middleware": "^1.4.0",
+    "webpack-hot-middleware": "^2.6.0"
   }
 }

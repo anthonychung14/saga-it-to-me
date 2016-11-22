@@ -51,8 +51,10 @@ export function* logToStore(args) {
     // do some async call to store
 }
 
-// Seems a lot like a reducer ain't it
-export default function* rootSaga() {
+// Seems a lot like a reducer ain't it.
+// Diff is that combine reducers is for delegating slices of state
+    // Idiomatic way to create a rootSaga
+export default function* counterSagas() {
     yield [
         helloSaga(),
         watchIncrementAsync(),
