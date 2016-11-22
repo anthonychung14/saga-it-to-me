@@ -3,10 +3,16 @@ import React, { Component, PropTypes } from 'react'
 
 const Counter = ({ value, onIncrement, onDecrement, onIncrementAsync, onDecrementAsync }) =>
       <div>
-        <button 
+        <button
             onClick={onIncrement}
           >
-          Increment
+          Sync-rement
+        </button>
+        {' '}
+        <button
+            onClick={onIncrementAsync}
+          >
+          Async-rement
         </button>
         {' '}
         <button onClick={onDecrement}>

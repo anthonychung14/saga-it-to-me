@@ -1,56 +1,62 @@
 import { takeEvery, delay } from 'redux-saga';
-import { put } from 'redux-saga/effects';
+import { put, call } from 'redux-saga/effects';
 
-// Watcher Saga: spawn a new incrementAsync task on each INCREMENT_ASYNC call
+// 1. Customary Hello World
+export function* helloSaga() {
+    console.log('Hello Saga Repo')
+}
+
+// 2A. Watcher Saga: spawn a new incrementAsync task on each INCREMENT_ASYNC call
 export function* watchIncrementAsync() {
-    console.log("i'm watching joo")
+    // console.log("ASYNC watcher activated")
     yield takeEvery('INCREMENT_ASYNC', onIncrementAsync)
 }
 
-// Worker Saga to perform the async task
-export function* onIncrementAsync() { 
-    
+// 2B. Worker Saga to perform the async task
+export function* onIncrementAsync() {
+    // console.log("ASYNC increment called");
     // using call side effect to call the func indirectly
     yield call(delay, 1000)
         // => { CALL: { fn: delay, args: [1000] } }
-    console.log("yo bro")
-    
+    // console.log("ASYNC delay complete, calling INCREMENT");
+
     yield put({ type: 'INCREMENT' })
         // => { PUT: { type: 'INCREMENT' } }
 }
 
-// Customary Hello World
-export function* helloSaga() {
-    console.log('sup saga')
+// 2A: LISTENS FOR ACTION
+export function* watchIncrementSync() {
+    console.log("SYNC watcher activated")
+    yield takeEvery('INCREMENT_SYNC', onIncrement)
 }
 
-export default function* rootSaga() { 
+// 3B: CALLS ACTION
+export function* onIncrement() {
+    console.log("INCREMENT SYNC")
+    yield put({ type: 'INCREMENT' })
+        // => { PUT: { type: 'INCREMENT' } }
+}
+
+
+// 4A. Breadcrumb watcher for all error (INCREMENT) objects
+// Generator middleware decouples from async nicely for this reason
+export function* watchAllActions() {
+    console.log("Watch all INCREMENTs")
+    yield takeEvery('INCREMENT', logToStore)
+}
+
+// 4B. Breadcrumb generator for all INC action calls
+export function* logToStore(args) {
+    console.log("Logging INCREMENT to store...");
+    // do some async call to store
+}
+
+// Seems a lot like a reducer ain't it
+export default function* rootSaga() {
     yield [
         helloSaga(),
-        watchIncrementAsync()
+        watchIncrementAsync(),
+        watchIncrementSync(),
+        watchAllActions()
     ]
 }
-
-
-/* 
-
-function* foo() {
-    for (var i = 0; i < arr.length; i++) { 
-            yield i;
-    }
-    return "yee haw"; 
-
-    while (true) {
-        // do something awesome        
-    }
-}
-
-
-var generator = foo()
-generator.next()  // { value: 0, done: false } 
-generator.next()  // 1
-generator.next()  // 2
-generator.next()  // 3
-generator.next()  // yee haw
-
-*/

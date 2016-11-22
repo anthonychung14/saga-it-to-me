@@ -1,17 +1,33 @@
 import test from 'tape';
 
-import { incrementAsync } from './sagas';
+import { put, call } from 'redux-saga/effects'
+import { delay } from 'redux-saga'
 
-test('incrementAsync Saga test', (assert) => {
-    const gen = incrementAsync();
+import { onIncrementAsync } from './sagas';
+
+test('onIncrementAsync Saga test', (assert) => {
+    const gen = onIncrementAsync();
+
+    assert.deepEqual(
+        gen.next().value,
+        // => { done: false, value: <result of delay(1000)> }
+        call(delay, 1000),
+        'onIncrementAsync returns a Promise that will resolve after 1 second'
+    )
+
+    assert.deepEqual(
+        gen.next().value,
+        // => { done: false, value: <result of calling put> }
+        put({ type: 'INCREMENT'}),
+        'onIncrementAsync should dispatch INCREMENT action after delay'
+    )
 
     assert.deepEqual(
         gen.next(),
-  // => { done: false, value: <result of delay(1000)> } 
-        { done: false, value: '' },
-        'incrementAsync returns a Promise that will resolve after 1 second'
+        // => { done: true, value: undefined }
+        { done: true, value: undefined },
+        'onIncrementAsync has a done clause'
     )
-     
-     gen.next() // => { done: false, value: <result of calling put> }
-     gen.next() // => { done: true, value: undefined }
-})
+
+     assert.end()
+});
