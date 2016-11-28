@@ -1,15 +1,15 @@
 import { connect } from 'react-redux'
 
-import Counter from '../components/Counter';
+import AsyncCounter from '../components/AsyncCounter';
 
-function mapStateToProps(state) {
+function mapStateToProps({ counterAsync = 0 }) {  
   return {
-    value: state.counter,
+    value: counterAsync,
   }
 }
 
 function mapDispatchToProps(dispatch) {
-    const action = type => dispatch({type})
+    const action = type => dispatch({ type })
 
     return {
         onIncrement: () => action('INCREMENT'),
@@ -18,4 +18,4 @@ function mapDispatchToProps(dispatch) {
     }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(Counter)
+export default connect(mapStateToProps, mapDispatchToProps)(AsyncCounter)

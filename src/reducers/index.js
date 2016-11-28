@@ -1,9 +1,12 @@
-import { combineReducers } from 'redux'
-import { counter, countdown } from './counterCancel'
+import { combineReducers } from 'redux';
+
+import counterAsync from './async';
+import { countdown, counterCancel } from './cancel';
 
 const rootReducer = combineReducers({
   countdown,
-  counter
+  counterCancel,
+  counterAsync
 })
 
 export default rootReducer

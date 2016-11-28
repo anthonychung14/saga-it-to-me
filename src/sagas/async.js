@@ -37,7 +37,6 @@ export function* onIncrement() {
         // => { PUT: { type: 'INCREMENT' } }
 }
 
-
 // 4A. Breadcrumb watcher for all error (INCREMENT) objects
 // Generator middleware decouples from async nicely for this reason
 export function* watchAllActions() {
@@ -51,10 +50,14 @@ export function* logToStore(args) {
     // do some async call to store
 }
 
-// Seems a lot like a reducer ain't it.
+// Seems a lot like a reducer ain't it?
+
 // Diff is that combine reducers is for delegating slices of state
     // Idiomatic way to create a rootSaga
-export default function* counterSagas() {
+
+/* 
+
+export default function* async() {
     yield [
         helloSaga(),
         watchIncrementAsync(),
@@ -62,3 +65,4 @@ export default function* counterSagas() {
         watchAllActions()
     ]
 }
+*/

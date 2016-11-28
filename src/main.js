@@ -1,4 +1,3 @@
-/* eslint-disable */
 import "babel-polyfill"
 
 import React from 'react'
@@ -11,21 +10,20 @@ import createSagaMiddleware from 'redux-saga'
 import reducer from './reducers'
 import rootSaga from './sagas'
 
-// import Counter from './components/Counter';
-// import CounterCancel from './components/CounterCancel';
-import App from './components/App';
+import App from './App.js';
 
+const sagaMiddleware = createSagaMiddleware();
 
-const sagaMiddleware = createSagaMiddleware()
 const store = createStore(
   reducer,
   applyMiddleware(sagaMiddleware)
-)
-sagaMiddleware.run(rootSaga)
+);
+
+sagaMiddleware.run(rootSaga);
 
 render(
-  <Provider store={store}>
-    <App />
-  </Provider>,
-  document.getElementById('root')
+    <Provider store={store}>
+        <App />
+    </Provider>,
+    document.getElementById('root')
 )
